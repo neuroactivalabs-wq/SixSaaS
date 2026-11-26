@@ -1,0 +1,6 @@
+# Nunca subir claves privadas ni licencias
+clave-privada*
+*.jwk.json
+licencias-de-prueba.txt
+EMP-licencias/
+node_modules/

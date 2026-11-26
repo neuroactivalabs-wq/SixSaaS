@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SixSaaS · Neuroactiva Labs</title>
+  <meta name="description" content="SixSaaS: herramientas simples para MiPymes y emprendedores. Aprende a conseguir clientes y a que vuelvan con la Academia, optimiza tu perfil de Google gratis y suma módulos Neuro.">
+  <meta name="theme-color" content="#05070a">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" href="icons/favicon.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="#/" aria-label="SixSaaS inicio">
+      <img src="img/sixsaas.webp" alt="" width="36" height="36">
+      <span>Six<b>SaaS</b></span>
+    </a>
+    <span id="badge" class="badge" hidden></span>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+
+  <nav class="tabs" aria-label="Navegación principal">
+    <a href="#/" data-tab="inicio"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Inicio</span></a>
+    <a href="#/academia" data-tab="academia"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.9V17h2V9zM5 13.2v4L12 21l7-3.8v-4L12 17z"/></svg><span>Academia</span></a>
+    <a href="#/optimizador" data-tab="optimizador"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.6L21 9l-5 4.4L17.6 20 12 16.6 6.4 20 8 13.4 3 9l6.6-.4z"/></svg><span>Optimizador</span></a>
+    <a href="#/licencias" data-tab="licencias"><svg viewBox="0 0 24 24"><path d="M7 14a5 5 0 1 1 4.9-6H22v4h-3v3h-3v-3h-4.1A5 5 0 0 1 7 14zm0-7a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg><span>Licencias</span></a>
+    <a href="#/ajustes" data-tab="ajustes"><svg viewBox="0 0 24 24"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm9 4l-2.1-.7a7 7 0 0 0-.6-1.5l1-2-2.1-2.1-2 1a7 7 0 0 0-1.5-.6L13 3h-2l-.7 2.1a7 7 0 0 0-1.5.6l-2-1L4.7 6.8l1 2a7 7 0 0 0-.6 1.5L3 11v2l2.1.7c.1.5.3 1 .6 1.5l-1 2 2.1 2.1 2-1c.5.3 1 .5 1.5.6L11 21h2l.7-2.1c.5-.1 1-.3 1.5-.6l2 1 2.1-2.1-1-2c.3-.5.5-1 .6-1.5L21 13z"/></svg><span>Ajustes</span></a>
+  </nav>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <script type="module" src="js/app.js"></script>
+  <noscript><p style="padding:2rem;color:#fff">SixSaaS necesita JavaScript para funcionar.</p></noscript>
+</body>
+</html>
