@@ -3138,7 +3138,7 @@ function buy(id){
  <div class="nx-row">${a.t.map(([n,p])=>`<a class="nx-btn nx-pri" href="${esc(NXPAY.PAYPAL+'/'+p.toFixed(2)+'USD')}" target="_blank" rel="noopener">${esc(n)} · US$${p.toFixed(2)} con PayPal</a>`).join('')}</div>
  <p style="margin-top:12px"><b>Yappy:</b> ${esc(NXPAY.YAPPY)} a nombre de ${esc(NXPAY.YAPPY_NOMBRE)}</p>
  <div class="nx-row">${NXPAY.YAPPY_URL?`<a class="nx-btn" href="${esc(NXPAY.YAPPY_URL)}" target="_blank" rel="noopener">Pagar con Yappy</a>`:`<button class="nx-btn" data-nx="yappy">Copiar número de Yappy</button>`}</div>
- <h3>2. Envía tu comprobante por WhatsApp</h3><p>Manda la captura del pago y te respondemos con un <b>enlace de activación</b>: lo abres en tu teléfono y la app queda activada. Sin copiar códigos.</p>
+ <h3>2. Envía tu comprobante por WhatsApp</h3><p>Manda la captura del pago y te respondemos con tu <b>código de activación</b>: lo pegas en <b>Activar</b> y la app queda activada para siempre en ese dispositivo.</p>
  <div class="nx-row"><a class="nx-btn nx-wa" href="${esc(wa(msg))}" target="_blank" rel="noopener">Enviar comprobante por WhatsApp</a><button class="nx-btn" data-nx="apps">← Ver otras apps</button></div>`);
 }
 /* ---- Respaldo en archivo ---- */
@@ -3180,12 +3180,14 @@ async function verify(raw){try{const key=String(raw||'').trim().replace(/\s+/g,'
 const usedDays=()=>{try{return JSON.parse(ls.get(UK)||'[]')}catch(e){return []}};
 function markUse(){const d=new Date().toISOString().slice(0,10),u=usedDays();if(!u.includes(d)){u.push(d);ls.set(UK,JSON.stringify(u))}return u.length}
 let licensed=false;
-async function activar(raw,silent){const r=await verify(raw);if(!r){if(!silent)toast('Ese enlace o código no es válido para '+me.n+'. Escríbenos por WhatsApp.');return false}
+async function activar(raw,silent){const r=await verify(raw);if(!r){if(!silent)toast('Ese código no es válido para '+me.n+'. Revisa que esté completo o escríbenos por WhatsApp.');return false}
  ls.set(LK,r.key);licensed=true;close();unlockUI();toast('¡Listo! '+me.n+' activada para siempre en este dispositivo.');return true}
 function unlockUI(){const l=document.querySelector('.nx-lock');if(l)l.remove();const c=document.querySelector('.nx-chip');if(c){c.textContent='✓ Activada';c.dataset.nx='';}}
-function activarUI(){modal(`<h2>Activar ${esc(me.n)}</h2><p>Cuando confirmamos tu pago te enviamos por WhatsApp un <b>enlace de activación</b>. Ábrelo en este teléfono o computadora y la app queda activada sola. No tienes que copiar nada.</p>
- <div class="nx-row"><button class="nx-btn nx-pri" data-nx="buy" data-id="${me.id}">Comprar ${esc(me.n)}</button><a class="nx-btn nx-wa" href="${esc(wa('Hola Neuroactiva Labs 👋 Ya pagué '+me.n+' y necesito mi enlace de activación.'))}" target="_blank" rel="noopener">Pedir mi enlace</a></div>
- <details style="margin-top:14px"><summary class="nx-mut" style="cursor:pointer">¿El enlace no abrió la app?</summary><p class="nx-mut">Mantén presionado el mensaje que te enviamos, toca Copiar y pégalo aquí completo.</p><textarea id="nxAct" style="width:100%;min-height:70px;background:#05070a;color:#eaf4f8;border:1px solid rgba(0,229,255,.3);border-radius:10px;padding:8px;font:14px Inter,system-ui"></textarea><div class="nx-row"><button class="nx-btn" data-nx="actgo">Activar</button></div></details>`)}
+function activarUI(){modal(`<h2>Activar ${esc(me.n)}</h2><p>Cuando confirmamos tu pago te enviamos tu <b>código de activación</b> por WhatsApp. Pégalo aquí: puedes pegar el código solo o el mensaje completo.</p>
+ <label for="nxAct" style="display:block;font-weight:600;margin-top:8px">Código de activación</label><textarea id="nxAct" placeholder="Pega aquí tu código" style="width:100%;box-sizing:border-box;min-height:80px;background:#05070a;color:#eaf4f8;border:1px solid rgba(0,229,255,.3);border-radius:10px;padding:10px;font:16px Inter,system-ui"></textarea>
+ <div class="nx-row"><button class="nx-btn nx-pri" data-nx="actgo">Activar</button></div>
+ <p class="nx-mut" style="margin-top:14px">¿Aún no pagas o no te llegó el código?</p>
+ <div class="nx-row"><button class="nx-btn" data-nx="buy" data-id="${me.id}">Comprar ${esc(me.n)}</button><a class="nx-btn nx-wa" href="${esc(wa('Hola Neuroactiva Labs 👋 Ya pagué '+me.n+' y necesito mi código de activación.'))}" target="_blank" rel="noopener">Pedir mi código</a></div>`);setTimeout(()=>{const a=document.getElementById('nxAct');a&&a.focus()},50)}
 function lockScreen(){if(document.querySelector('.nx-lock'))return;const o=document.createElement('div');o.className='nx-ov nx-lock';
  o.innerHTML=`<div class="nx-box" role="dialog" aria-modal="true" style="text-align:center"><img src="${L[me.id]}" alt="" style="width:84px;height:84px;border-radius:50%"><h2 style="padding:0;margin-top:8px">Terminó tu prueba gratis de ${esc(me.n)}</h2><p>Usaste tus ${FREE_DAYS} días de uso gratis. Tus datos siguen guardados en este dispositivo: activa la app para seguir usándola, sin límite de clientes y con un solo pago.</p>
  <div class="nx-row" style="justify-content:center"><button class="nx-btn nx-pri" data-nx="buy" data-id="${me.id}">Comprar ${esc(me.n)}</button><button class="nx-btn" data-nx="act">Ya pagué: activar</button><button class="nx-btn" data-nx="bk">Descargar respaldo</button></div></div>`;
@@ -3207,7 +3209,7 @@ function instalar(){if(deferred){deferred.prompt();deferred=null;return}
  modal(`<h2>Instalar ${esc(me.n)}</h2><p><b>Android (Chrome):</b> menú ⋮ → <b>Instalar app</b> o <b>Agregar a pantalla principal</b>.</p><p><b>iPhone (Safari):</b> botón Compartir → <b>Agregar a inicio</b>.</p><p><b>Computadora (Chrome o Edge):</b> ícono de instalar en la barra de direcciones.</p><p class="nx-mut">Queda como una app más y funciona sin conexión.</p>`)}
 if(C.free&&'serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js').catch(()=>{})}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-nx]');if(!b)return;const k=b.dataset.nx;
- if(k==='act')activarUI();else if(k==='actgo'){const v=(document.getElementById('nxAct')||{}).value||'';const mm=v.match(/SXS1\.[\w.-]+/);mm?activar(mm[0]):toast('No encontré la activación en ese texto')}
+ if(k==='act')activarUI();else if(k==='actgo'){const v=(document.getElementById('nxAct')||{}).value||'';const mm=v.replace(/\s+/g,'').match(/SXS1\.[\w-]+\.[\w-]{86}/)||v.match(/SXS1\.[\w-]+\.[\w-]+/);mm?activar(mm[0]):toast('No encontré un código de activación en ese texto')}
  else if(k==='inst')instalar();
 },true);
 
