@@ -52,7 +52,7 @@ async function detectar() {
 }
 function contactoLink(tema) {
   const t = `Hola Neuro Gestión Empresarial 👋 Escribo desde SixSaaS v${CONFIG.VERSION}.\nTema: ${tema}.\n`;
-  return CONFIG.CONTACTO_WA ? `https://wa.me/${String(CONFIG.CONTACTO_WA).replace(/\D/g, '')}?text=${encodeURIComponent(t)}` : CONFIG.EMP_URL;
+  return CONFIG.CONTACTO_WA ? `https://wa.me/${String(CONFIG.CONTACTO_WA).replace(/\D/g, '')}?text=${encodeURIComponent(t)}` : '#/pagar';
 }
 
 async function copiar(texto) {
@@ -121,13 +121,13 @@ function pedirModo() {
 function modCard(m, compact = false) {
   const activo = tiene(m.id);
   const url = urlDe(m.id);
-  const buy = CONFIG.BUY_URLS[m.id] || CONFIG.EMP_URL;
+  const buy = `#/pagar/${m.id}`;
   const logo = m.logo
     ? `<img class="logo" src="${m.logo}" alt="Logo ${esc(m.nombre)}" width="84" height="84" loading="lazy">`
     : `<div class="ph" aria-hidden="true">${esc(m.sigla)}</div>`;
   const accion = url
-    ? `<a class="btn small" href="${esc(abrirMod(m.id))}">Abrir</a>${activo ? '' : `<a class="btn small ghost" href="${esc(buy)}" target="_blank" rel="noopener">Comprar</a>`}`
-    : `<a class="btn small" href="${esc(buy)}" target="_blank" rel="noopener">Obtener</a>${activo ? '<a class="btn small ghost" href="#/ajustes">Enlazar</a>' : ''}`;
+    ? `<a class="btn small" href="${esc(abrirMod(m.id))}">Abrir</a>${activo ? '' : `<a class="btn small ghost" href="${esc(buy)}">Comprar</a>`}`
+    : `<a class="btn small" href="${esc(buy)}">Obtener</a>${activo ? '<a class="btn small ghost" href="#/ajustes">Enlazar</a>' : ''}`;
   if (compact) {
     const lg = m.logo ? `<img class="logo" src="${m.logo}" alt="Logo ${esc(m.nombre)}" width="48" height="48" loading="lazy">` : `<div class="ph" aria-hidden="true">${esc(m.sigla)}</div>`;
     return `<article class="card mod compact" title="${esc(m.desc)}"><div class="head">${lg}<div><h3>${esc(m.nombre)}</h3><span class="price">$${CONFIG.PRECIO_MODULO.toFixed(2)}</span></div></div><div class="meta">${accion}${activo ? '<span class="tag ok">Activo ✓</span>' : ''}</div></article>`;
@@ -154,7 +154,7 @@ function vistaInicio() {
     <ol class="embudo mt" aria-label="Recorrido de la academia">${CURSOS.map((c) => `<li><a href="#/academia/${c.id}"><span>${c.icono}</span><b>${esc(c.etapa)}</b></a></li>`).join('')}</ol>
     <div class="grid mt">${CURSOS.map(cursoCard).join('')}</div>
     <p class="mt"><b>Un tercio de cada curso es gratis</b> (${GRATIS_LECCIONES} lecciones). ${tieneAcademia() ? 'Tienes la Academia completa ✓' : `Los ${CURSOS.length} cursos completos, por <b>$${CONFIG.PRECIO_ACADEMIA.toFixed(2)}</b> pago único.`}</p>
-    <div class="row mt"><a class="btn" href="#/academia">${tieneAcademia() ? 'Continuar aprendiendo' : 'Empezar gratis'}</a>${tieneAcademia() ? '' : `<a class="btn ghost" href="${esc(buyAcademia())}" target="_blank" rel="noopener">Obtener la Academia · $${CONFIG.PRECIO_ACADEMIA.toFixed(2)}</a>`}</div>
+    <div class="row mt"><a class="btn" href="#/academia">${tieneAcademia() ? 'Continuar aprendiendo' : 'Empezar gratis'}</a>${tieneAcademia() ? '' : `<a class="btn ghost" href="${esc(buyAcademia())}">Obtener la Academia · $${CONFIG.PRECIO_ACADEMIA.toFixed(2)}</a>`}</div>
   </section>
   <section class="card"><div class="row sp"><div><h3>📊 Optimizador de tu perfil de Google</h3><p class="mt">Tu puntaje de 0 a 100 y las acciones que más suman. Gratis, en 3 minutos.</p></div><a class="btn small" href="#/optimizador">Analizar mi perfil</a></div></section>
   <section class="mods-sec">
@@ -311,7 +311,7 @@ function vistaLicencias() {
     : '<p>Aún no tienes licencias activas.</p>';
   return `
   <section><h1 style="font-size:1.6rem">Licencias</h1>
-    <p class="mt">Compras tu módulo o la Academia en EMP y recibes un código. Pégalo aquí para activarlo. Funciona sin conexión.</p>
+    <p class="mt">Pagas tu módulo o la Academia por PayPal o Yappy, envías el comprobante por WhatsApp y recibes un código. Pégalo aquí para activarlo. Funciona sin conexión.</p>
     <form id="lic" class="mt"><label class="f">Tu código de licencia<textarea data-lic placeholder="SXS1.…" rows="3" spellcheck="false" autocomplete="off"></textarea></label>
     <div class="row mt"><button class="btn" type="submit">Activar</button><a class="btn ghost" href="#/comparar">Comparar Gratis vs Full</a></div></form></section>
   <section><h2>Mis licencias</h2>${lista}
@@ -331,8 +331,7 @@ function vistaAjustes() {
   <section class="card"><h3>Mis módulos</h3><p class="mt">SixSaaS los enlaza solo cuando los abres o cuando están publicados con el nombre estándar. Si usas otra dirección, pégala aquí.</p>
     <form id="urls" class="mt">${MODULES.map((m) => `<label class="f mt">${esc(m.nombre)}<input type="url" name="${m.id}" value="${esc(urlDe(m.id))}" placeholder="${esc(CONFIG.AUTO_URL(m.id))}" autocomplete="off" inputmode="url"></label>`).join('')}
     <div class="row mt"><button class="btn small" type="submit">Guardar enlaces</button><button type="button" class="btn small ghost" data-act="buscar-mod">Buscar módulos</button></div></form></section>
-  <section class="card"><h3>Ayuda y actualizaciones</h3><div class="row mt"><a class="btn small" href="#/ayuda">Ayuda</a><a class="btn small ghost" href="${esc(CONFIG.EMP_URL)}" target="_blank" rel="noopener">Pedir actualizaciones en EMP</a></div></section>
-  <section class="card"><h3>Cuenta</h3><p class="mt">Inicio de sesión con tu cuenta EMP: próximamente.</p><div class="row mt"><button class="btn small" disabled>Iniciar sesión</button></div></section>
+  <section class="card"><h3>Ayuda y actualizaciones</h3><div class="row mt"><a class="btn small" href="#/ayuda">Ayuda</a><a class="btn small ghost" href="${esc(contactoLink('Pedir una actualización o un módulo nuevo'))}" target="_blank" rel="noopener">Pedir actualizaciones por WhatsApp</a></div></section>
   <section class="card"><h3>Instalar SixSaaS</h3><p class="mt">Úsala como app en tu celular, incluso sin internet.</p>
     <div class="row mt"><button class="btn small" data-act="instalar" ${state.installEvt ? '' : 'disabled'}>Instalar app</button></div>
     ${state.installEvt ? '' : '<p class="help mt">Si no ves el botón: en iPhone usa Compartir → "Agregar a inicio"; en Android/PC usa el menú del navegador → "Instalar".</p>'}</section>
@@ -342,13 +341,13 @@ function vistaAjustes() {
 
 /* ---------- Ayuda ---------- */
 const AYUDA_KB = [
-  { k: ['licencia', 'activar', 'codigo', 'clave'], r: 'Compra el módulo o la Academia en EMP, copia tu código (empieza con SXS1.) y pégalo en **Licencias**. Cualquier módulo Neuro desbloquea SixSaaS Full (Optimizador completo). Los cursos de la Academia se abren con la licencia de la **Academia**.' },
+  { k: ['licencia', 'activar', 'codigo', 'clave'], r: 'Paga el módulo o la Academia por PayPal o Yappy, envía el comprobante por WhatsApp, copia el código que te enviamos (empieza con SXS1.) y pégalo en **Licencias**. Cualquier módulo Neuro desbloquea SixSaaS Full (Optimizador completo). Los cursos de la Academia se abren con la licencia de la **Academia**.' },
   { k: ['academia', 'curso', 'cursos', 'leccion', 'lecciones', 'setter', 'closer'], r: `La **Academia** tiene ${CURSOS.length} cursos de 12 lecciones. Las primeras ${GRATIS_POR_CURSO} de cada curso son gratis; con la licencia de la Academia ($${CONFIG.PRECIO_ACADEMIA.toFixed(2)}, pago único) se abren todas. Los módulos Neuro no incluyen la Academia.` },
-  { k: ['precio', 'cuesta', 'costo', 'pagar', 'comprar'], r: `Cada módulo cuesta **$${CONFIG.PRECIO_MODULO.toFixed(2)} en pago único** y la Academia **$${CONFIG.PRECIO_ACADEMIA.toFixed(2)}**. El pago se hace en EMP; SixSaaS no procesa pagos.` },
+  { k: ['precio', 'cuesta', 'costo', 'pagar', 'comprar'], r: `Cada módulo cuesta **$${CONFIG.PRECIO_MODULO.toFixed(2)} en pago único** y la Academia **$${CONFIG.PRECIO_ACADEMIA.toFixed(2)}**. El pago es por **PayPal o Yappy** y envías el comprobante por **WhatsApp** (mira **Cómo pagar**).` },
   { k: ['gratis', 'prueba', 'limite', 'siete', 'full', 'diferencia'], r: 'Cada módulo gratis incluye **7 usos** (clientes, citas, pedidos…). Con licencia es ilimitado, puedes usar solo tu marca y desbloqueas el Optimizador completo (SixSaaS Full).' },
   { k: ['modulo', 'modulos', 'enlazar', 'abrir', 'enlace'], r: 'Los módulos aparecen con **Abrir** cuando están publicados. Si no lo detecta, pega su dirección en **Ajustes → Mis módulos**.' },
   { k: ['datos', 'perder', 'privacidad', 'incognito'], r: 'Tus datos viven solo en tu dispositivo. Puedes usar modo incógnito o guardar en este teléfono (Ajustes).' },
-  { k: ['actualizacion', 'actualizar', 'mejora', 'funcion', 'nuevo'], r: 'Las actualizaciones y módulos nuevos se piden y se entregan desde **EMP**.' },
+  { k: ['actualizacion', 'actualizar', 'mejora', 'funcion', 'nuevo'], r: 'Las actualizaciones y módulos nuevos se piden por **WhatsApp** a Neuro Gestión Empresarial.' },
   { k: ['optimizador', 'google', 'perfil', 'gemini'], r: 'El **Optimizador** analiza tu perfil de Google y te da acciones por impacto. La **Academia** te enseña a ejecutarlas y a conversar, cerrar y fidelizar clientes.' },
 ];
 const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -359,8 +358,8 @@ function vistaAyuda() {
   <section class="card glow"><div id="chat" aria-live="polite">${chat.length ? chat.map((x) => `<div class="msgb ${x.r}">${fmt(x.t)}</div>`).join('') : '<p class="help">Escribe tu pregunta o toca una sugerencia.</p>'}</div>
     <div class="tabsbar mt">${['¿Cómo activo mi licencia?', '¿Qué incluye la versión gratis?', '¿Cuánto cuesta?', '¿Cómo enlazo mis módulos?'].map((s) => `<button type="button" class="pill" data-act="asis-sug" data-q="${esc(s)}">${esc(s)}</button>`).join('')}</div>
     <form id="asis" class="mt"><div class="row"><input type="text" name="q" placeholder="Escribe tu pregunta…" autocomplete="off" style="flex:1;min-width:0"><button class="btn" type="submit">Preguntar</button></div></form></section>
-  <section class="card"><h3>Habla con Neuro Gestión Empresarial</h3><p class="mt">¿Prefieres una persona? Escríbenos${CONFIG.CONTACTO_WA ? ' por WhatsApp' : ' por EMP'}.</p><div class="stack mt">${temas.map(([t, n]) => `<a class="btn ghost" href="${esc(contactoLink(n))}" target="_blank" rel="noopener">${esc(t)}</a>`).join('')}</div></section>
-  <section class="card"><h3>Pedir actualizaciones</h3><p class="mt">Mejoras y módulos nuevos se solicitan y se entregan desde EMP.</p><div class="row mt"><a class="btn" href="${esc(CONFIG.EMP_URL)}" target="_blank" rel="noopener">Ir a EMP</a></div></section>`;
+  <section class="card"><h3>Habla con Neuro Gestión Empresarial</h3><p class="mt">¿Prefieres una persona? Escríbenos por WhatsApp.</p><div class="stack mt">${temas.map(([t, n]) => `<a class="btn ghost" href="${esc(contactoLink(n))}" target="_blank" rel="noopener">${esc(t)}</a>`).join('')}</div></section>
+  <section class="card"><h3>Pedir actualizaciones</h3><p class="mt">Mejoras y módulos nuevos se piden por WhatsApp.</p><div class="row mt"><a class="btn" href="${esc(contactoLink('Pedir una actualización o un módulo nuevo'))}" target="_blank" rel="noopener">Escribir por WhatsApp</a></div></section>`;
 }
 function preguntar(q) {
   const t = new Set(norm(q).replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean)); const nq = norm(q);
@@ -374,14 +373,14 @@ const pk = (c, n) => `${c}:${n}`;
 const lecHecha = (c, n) => !!state.progreso[pk(c, n)]?.hecho;
 const lecBloqueada = (l) => !l.gratis && !tieneAcademia();
 const cursoHechas = (c) => c.lecciones.filter((l) => lecHecha(c.id, l.id)).length;
-const buyAcademia = () => CONFIG.BUY_URLS.academia || CONFIG.EMP_URL;
+const buyAcademia = () => '#/pagar/academia';
 const nombreLic = (m) => (m === 'academia' ? 'Academia SixSaaS (4 cursos)' : (MODULES.find((x) => x.id === m)?.nombre || 'SixSaaS Full'));
 
 function bannerAcademia() {
   if (tieneAcademia()) return `<div class="card glow"><h3>🎓 Academia completa activa ✓</h3><p class="mt">Tienes acceso a los ${CURSOS.length} cursos y a las ${TOTAL_LECCIONES} lecciones.</p></div>`;
   return `<div class="card glow"><h3>🎓 Desbloquea los ${CURSOS.length} cursos por $${CONFIG.PRECIO_ACADEMIA.toFixed(2)}</h3>
     <p class="mt">Pago único, sin suscripción. Hoy tienes gratis ${GRATIS_LECCIONES} de ${TOTAL_LECCIONES} lecciones (un tercio de cada curso). La licencia de la Academia abre las ${TOTAL_LECCIONES - GRATIS_LECCIONES} restantes. Los módulos Neuro no la incluyen.</p>
-    <div class="row mt"><a class="btn" href="${esc(buyAcademia())}" target="_blank" rel="noopener">Obtener la Academia</a><a class="btn ghost" href="#/licencias">Ya tengo mi código</a></div></div>`;
+    <div class="row mt"><a class="btn" href="${esc(buyAcademia())}">Obtener la Academia</a><a class="btn ghost" href="#/licencias">Ya tengo mi código</a></div></div>`;
 }
 
 function cursoCard(c) {
@@ -432,7 +431,7 @@ function vistaLeccion(cid, n) {
   const nav = `<div class="row sp mt2">${prev ? `<a class="btn ghost small" href="#/academia/${cid}/${prev.id}">← ${esc(prev.titulo)}</a>` : '<span></span>'}${next ? `<a class="btn ghost small" href="#/academia/${cid}/${next.id}">Siguiente →</a>` : sigCurso ? `<a class="btn ghost small" href="#/academia/${sigCurso.id}">Siguiente curso: ${esc(sigCurso.corto)} →</a>` : '<a class="btn ghost small" href="#/academia">Ver todos los cursos</a>'}</div>`;
   const cab = `<p class="help"><a href="#/academia">Academia</a> · <a href="#/academia/${cid}">${esc(c.corto)}</a> · Lección ${l.id} de ${c.total} · ${l.min} min</p><h1 style="font-size:1.5rem" class="mt">${esc(l.titulo)}</h1><p class="mt"><b>Objetivo:</b> ${esc(l.objetivo)}</p>`;
   if (lecBloqueada(l)) {
-    return `<section>${cab}<div class="lock mt2"><h3>Esta lección es parte de la Academia</h3><p class="mt">Con la licencia de la Academia ($${CONFIG.PRECIO_ACADEMIA.toFixed(2)}, pago único) desbloqueas las ${TOTAL_LECCIONES - GRATIS_LECCIONES} lecciones restantes de los ${CURSOS.length} cursos.</p><div class="row mt"><a class="btn" href="${esc(buyAcademia())}" target="_blank" rel="noopener">Obtener la Academia</a><a class="btn ghost" href="#/licencias">Ya tengo mi código</a></div></div>${nav}</section>`;
+    return `<section>${cab}<div class="lock mt2"><h3>Esta lección es parte de la Academia</h3><p class="mt">Con la licencia de la Academia ($${CONFIG.PRECIO_ACADEMIA.toFixed(2)}, pago único) desbloqueas las ${TOTAL_LECCIONES - GRATIS_LECCIONES} lecciones restantes de los ${CURSOS.length} cursos.</p><div class="row mt"><a class="btn" href="${esc(buyAcademia())}">Obtener la Academia</a><a class="btn ghost" href="#/licencias">Ya tengo mi código</a></div></div>${nav}</section>`;
   }
   const key = pk(cid, l.id); const pr = state.progreso[key] || {};
   const bloques = l.bloques.map((b) => (b.p ? `<p class="mt body">${fmt(b.p)}</p>` : `<ul class="lista">${b.lista.map((i) => `<li>${fmt(i)}</li>`).join('')}</ul>`)).join('');
@@ -541,13 +540,44 @@ function vistaComparar() {
     <div class="grid mt">${BENEFICIOS.map(([i, t, d]) => `<article class="card"><h3>${i} ${esc(t)}</h3><p class="mt">${esc(d)}</p></article>`).join('')}</div></section>
   <section class="card glow"><h3>Elige tu módulo</h3>
     <div class="mods mt">${MODULES.map((m) => `<img src="${m.logo}" alt="${esc(m.nombre)}" width="56" height="56" loading="lazy">`).join('')}</div>
-    <p class="mt">Cada uno cuesta $${CONFIG.PRECIO_MODULO.toFixed(2)} y desbloquea todo lo de la columna Full. El pago se hace en EMP; SixSaaS no procesa pagos.</p>
-    <div class="row mt"><a class="btn" href="${esc(CONFIG.EMP_URL)}" target="_blank" rel="noopener">Ver módulos en EMP</a><a class="btn ghost" href="#/licencias">Ya tengo mi código</a><button class="btn ghost" data-act="imprimir">Imprimir / guardar PDF</button></div>
+    <p class="mt">Cada uno cuesta $${CONFIG.PRECIO_MODULO.toFixed(2)} y desbloquea todo lo de la columna Full. Pagas por PayPal o Yappy y envías el comprobante por WhatsApp.</p>
+    <div class="row mt"><a class="btn" href="#/pagar/sixsaas">Cómo pagar</a><a class="btn ghost" href="#/licencias">Ya tengo mi código</a><button class="btn ghost" data-act="imprimir">Imprimir / guardar PDF</button></div>
     <p class="help mt">SixSaaS no está afiliado a Google. Gemini y Google Business Profile son marcas de Google LLC.</p></section>`;
 }
 
+
+/* ---------- Cómo pagar (PayPal / Yappy + comprobante por WhatsApp) ---------- */
+function productoPago(id) {
+  if (id === 'academia') return { nombre: 'Academia SixSaaS (4 cursos)', precio: CONFIG.PRECIO_ACADEMIA };
+  const m = MODULES.find((x) => x.id === id);
+  if (m) return { nombre: m.nombre, precio: CONFIG.PRECIO_MODULO };
+  return { nombre: 'SixSaaS Full (Optimizador completo)', precio: CONFIG.PRECIO_MODULO };
+}
+function vistaPagar(id) {
+  const p = productoPago(id);
+  const monto = p.precio.toFixed(2);
+  const P = CONFIG.PAGO;
+  const paypal = `${P.PAYPAL_URL}/${monto}USD`;
+  const msg = `Hola Neuro Gestión Empresarial 👋 Quiero la licencia de ${p.nombre} ($${monto}, pago único) de SixSaaS.\nYa pagué por: (PayPal / Yappy)\nTe envío el comprobante 👇`;
+  const wa = `https://wa.me/${String(CONFIG.CONTACTO_WA).replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`;
+  const otros = ['academia', 'sixsaas', ...MODULES.map((m) => m.id)].filter((x) => x !== id);
+  return `
+  <section><a class="back" href="#/licencias">← Licencias</a><h1 style="font-size:1.6rem">Cómo pagar</h1>
+    <p class="mt">${esc(p.nombre)} · <b>$${monto}</b> pago único, sin suscripción.</p></section>
+  <section class="card glow"><h3>1. Paga por PayPal o Yappy</h3>
+    <div class="stack mt"><a class="btn" href="${esc(paypal)}" target="_blank" rel="noopener">Pagar $${monto} con PayPal</a></div>
+    <p class="mt"><b>Yappy:</b> ${esc(P.YAPPY)} · ${esc(P.YAPPY_NOMBRE)}</p>
+    <div class="row mt"><button class="btn small ghost" data-act="copiar-yappy">Copiar número de Yappy</button></div></section>
+  <section class="card"><h3>2. Envía tu comprobante por WhatsApp</h3>
+    <p class="mt">Manda la captura del pago. Te respondemos con tu código de licencia.</p>
+    <div class="stack mt"><a class="btn" href="${esc(wa)}" target="_blank" rel="noopener">Enviar comprobante por WhatsApp</a></div></section>
+  <section class="card"><h3>3. Activa tu código</h3><p class="mt">Pega el código que te enviamos en Licencias. Funciona sin conexión.</p>
+    <div class="row mt"><a class="btn ghost" href="#/licencias">Ya tengo mi código</a></div></section>
+  <section><p class="help">¿Quieres otro? ${otros.map((x) => `<a href="#/pagar/${x}">${esc(productoPago(x).nombre)}</a>`).join(' · ')}</p></section>`;
+}
+
 /* ---------- Router ---------- */
-const RUTAS = { '': ['inicio', vistaInicio], academia: ['academia', vistaAcademia], optimizador: ['optimizador', vistaOptimizador], licencias: ['licencias', vistaLicencias], comparar: ['comparar', vistaComparar], ayuda: ['ayuda', vistaAyuda], ajustes: ['ajustes', vistaAjustes] };
+const RUTAS = { '': ['inicio', vistaInicio], academia: ['academia', vistaAcademia], optimizador: ['optimizador', vistaOptimizador], licencias: ['licencias', vistaLicencias], comparar: ['comparar', vistaComparar], ayuda: ['ayuda', vistaAyuda], ajustes: ['ajustes', vistaAjustes], pagar: ['licencias', vistaPagar] };
 
 function registrar() {
   const q = new URLSearchParams(location.hash.split('?')[1] || ''); const id = q.get('m'); const u = limpiaUrl(q.get('u') || '');
@@ -638,6 +668,7 @@ app.addEventListener('click', async (e) => {
   if (a === 'asis-sug') { preguntar(el.dataset.q); return; }
   if (a === 'buscar-mod') { toast('Buscando…'); await detectar(); toast('Listo'); return; }
   if (a === 'imprimir') { window.print(); return; }
+  if (a === 'copiar-yappy') { copiar(CONFIG.PAGO.YAPPY.replace(/\D/g, '')); return; }
   if (a === 'editar') { state.resultado = null; render(); }
   if (a === 'limpiar') { state.perfil = {}; persistir(); render(); toast('Respuestas borradas'); }
   if (a === 'modo-guardar') { store.setMode('guardar'); persistir(); toast('Se guardará en este dispositivo'); render(); }

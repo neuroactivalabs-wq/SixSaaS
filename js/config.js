@@ -1,6 +1,6 @@
 // Configuración central de SixSaaS — Neuroactiva Labs + Neuro Gestión Empresarial
 export const CONFIG = {
-  VERSION: '0.5.0',
+  VERSION: '0.5.1',
 
   // Clave PÚBLICA para verificar licencias (la privada vive solo en el kit de EMP).
   PUBLIC_KEY_JWK: {
@@ -15,28 +15,20 @@ export const CONFIG = {
   // Cualquier licencia de un módulo Neuro desbloquea el Optimizador Full. La licencia 'academia' solo abre los cursos.
   ANY_KEY_UNLOCKS_FULL: true,
 
-  // Tienda de EMP (los cobros los maneja EMP, SixSaaS no procesa pagos).
-  EMP_URL: 'https://emp-neuroactiva.pages.dev/',
-
-  // Enlace de compra por módulo. Por ahora todos apuntan a la tienda EMP;
-  // cuando cada módulo tenga su propia página de compra, reemplaza el valor aquí.
-  BUY_URLS: {
-    academia: 'https://emp-neuroactiva.pages.dev/',
-    sixsaas: 'https://emp-neuroactiva.pages.dev/',
-    resenas: 'https://emp-neuroactiva.pages.dev/',
-    cotizaciones: 'https://emp-neuroactiva.pages.dev/',
-    recompras: 'https://emp-neuroactiva.pages.dev/',
-    citador: 'https://emp-neuroactiva.pages.dev/',
-    pedidos: 'https://emp-neuroactiva.pages.dev/',
-    crm: 'https://emp-neuroactiva.pages.dev/',
+  // Cómo se paga una licencia: PayPal o Yappy, y el comprobante se envía por WhatsApp.
+  // SixSaaS no procesa pagos: estos datos solo se muestran en la pantalla "Cómo pagar" (#/pagar).
+  PAGO: {
+    PAYPAL_URL: 'https://paypal.me/jesusbarrios06', // se le agrega el monto, p. ej. /4.99USD
+    YAPPY: '6768-4866',
+    YAPPY_NOMBRE: 'Jesus Barrios',
   },
 
   // Dirección donde se busca cada módulo automáticamente (nombre de proyecto en Cloudflare Pages).
   // Si lo publicas con otro nombre/dominio, se enlaza igual al abrir el módulo, o pégalo en Ajustes → Mis módulos.
   AUTO_URL: (id) => `https://neuro${id}.pages.dev/`,
 
-  // WhatsApp de Neuro Gestión Empresarial (solo dígitos con código de país, p. ej. 50760000000). '' = se usa EMP.
-  CONTACTO_WA: '',
+  // WhatsApp de Neuro Gestión Empresarial (solo dígitos con código de país). Aquí llegan los comprobantes de pago.
+  CONTACTO_WA: '50764387978',
 
   PRECIO_MODULO: 4.99,
   PRECIO_ACADEMIA: 4.99, // los 4 cursos completos, pago único

@@ -6,7 +6,7 @@
 3. Opcional: conecta tu dominio en "Domain management".
 
 ## Antes de lanzar, edita `js/config.js`
-- `BUY_URLS`: pega el enlace de compra de cada módulo en EMP (mientras estén vacíos, la tarjeta dice "Disponible pronto").
+- `PAGO` y `CONTACTO_WA`: datos de PayPal, Yappy y el WhatsApp donde llegan los comprobantes. Todos los botones de compra abren la pantalla "Cómo pagar" (`#/pagar/<id>`).
 - `MODULE_URLS`: URL de cada módulo cuando esté publicado.
 - Cada vez que cambies archivos, sube también `VERSION` en `sw.js` para que los usuarios reciban la actualización.
 

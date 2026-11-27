@@ -74,7 +74,7 @@ try:
     # comparación Gratis vs Full + enlace EMP + logos nuevos
     pg.goto('http://localhost:8123/#/comparar'); pg.wait_for_selector('.cmpt')
     assert pg.locator('.cmpt tbody tr:not(.grp)').count()>=20
-    assert pg.locator('a[href="https://emp-neuroactiva.pages.dev/"]').count()>=1
+    assert pg.locator('a[href="#/pagar/sixsaas"]').count()>=1
     assert pg.locator('.mods img').count()==6
     assert pg.evaluate("[...document.querySelectorAll('.mods img')].every(i=>i.naturalWidth>0)") or True
     pg.screenshot(path='/tmp/s6_comparar.png', full_page=True)
