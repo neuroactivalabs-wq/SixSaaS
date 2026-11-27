@@ -1,6 +1,6 @@
 // Configuración central de SixSaaS — Neuroactiva Labs + Neuro Gestión Empresarial
 export const CONFIG = {
-  VERSION: '0.5.1',
+  VERSION: '0.5.2',
 
   // Clave PÚBLICA para verificar licencias (la privada vive solo en el kit de EMP).
   PUBLIC_KEY_JWK: {

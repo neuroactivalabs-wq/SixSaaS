@@ -690,5 +690,10 @@ window.addEventListener('hashchange', render);
   if (q.get('key')) { await activar(q.get('key')); history.replaceState(null, '', '#/licencias'); }
   render();
   detectar();
-  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => {});
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+    // Si llega una versión nueva, recarga una sola vez para no quedarse con botones viejos en caché.
+    const habiaSW = !!navigator.serviceWorker.controller; let recargado = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => { if (habiaSW && !recargado) { recargado = true; location.reload(); } });
+    navigator.serviceWorker.register('sw.js').then((r) => r.update()).catch(() => {});
+  }
 })();
