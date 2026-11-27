@@ -1,5 +1,5 @@
 // Service worker de SixSaaS: funciona sin conexión. Sube VERSION al publicar cambios.
-const VERSION = 'sixsaas-v0.5.2';
+const VERSION = 'sixsaas-v0.5.3';
 const ASSETS = [
   './', 'index.html', 'manifest.webmanifest', 'css/styles.css',
   'js/app.js', 'js/config.js', 'js/modules.js', 'js/license.js', 'js/store.js', 'js/optimizer.js', 'js/academia.js', 'js/cursos/google-extra.js', 'js/cursos/setter.js', 'js/cursos/closer.js', 'js/cursos/fidelizar.js',

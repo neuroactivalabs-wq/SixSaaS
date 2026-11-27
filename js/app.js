@@ -21,7 +21,7 @@ const state = {
 
 /* ---------- Estado derivado ---------- */
 const fmt = (t) => esc(t).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-// La licencia de la Academia solo abre los cursos; cualquier licencia de módulo Neuro abre el Optimizador Full.
+// SixSaaS Full se abre solo con la licencia 'sixsaas'. La Academia solo abre los cursos y los módulos Neuro no abren nada aquí.
 const isFull = () => state.licencias.some((l) => l.m !== 'academia' && (CONFIG.ANY_KEY_UNLOCKS_FULL || l.m === 'sixsaas'));
 const tieneAcademia = () => state.licencias.some((l) => l.m === 'academia');
 const tiene = (id) => state.licencias.some((l) => l.m === id);
@@ -248,7 +248,7 @@ function herramientaHTML(r, full) {
   const t = state.tool;
   const permitido = full || CONFIG.FREE_TOOLS.includes(t);
   if (!permitido) {
-    return `<div class="lock mt"><h3>Disponible en SixSaaS Full</h3><p class="mt">Activa cualquier módulo Neuro (desde $${CONFIG.PRECIO_MODULO.toFixed(2)}) y desbloquea todas las herramientas y los pasos detallados.</p><div class="row mt"><a class="btn" href="#/licencias">Activar licencia</a></div></div>`;
+    return `<div class="lock mt"><h3>Disponible en SixSaaS Full</h3><p class="mt">Con la licencia de SixSaaS Full ($${CONFIG.PRECIO_MODULO.toFixed(2)}, pago único) desbloqueas todas las herramientas y los pasos detallados.</p><div class="row mt"><a class="btn" href="#/pagar/sixsaas">Cómo pagar</a><a class="btn ghost" href="#/licencias">Activar licencia</a></div></div>`;
   }
   const g = state.gen;
   const inputs = `<div class="fields mt">
@@ -341,10 +341,10 @@ function vistaAjustes() {
 
 /* ---------- Ayuda ---------- */
 const AYUDA_KB = [
-  { k: ['licencia', 'activar', 'codigo', 'clave'], r: 'Paga el módulo o la Academia por PayPal o Yappy, envía el comprobante por WhatsApp, copia el código que te enviamos (empieza con SXS1.) y pégalo en **Licencias**. Cualquier módulo Neuro desbloquea SixSaaS Full (Optimizador completo). Los cursos de la Academia se abren con la licencia de la **Academia**.' },
+  { k: ['licencia', 'activar', 'codigo', 'clave'], r: 'Paga SixSaaS Full o la Academia por PayPal o Yappy, envía el comprobante por WhatsApp, copia el código que te enviamos (empieza con SXS1.) y pégalo en **Licencias**. SixSaaS Full se vende aparte: las apps Neuro no lo desbloquean. Los cursos de la Academia se abren con la licencia de la **Academia**.' },
   { k: ['academia', 'curso', 'cursos', 'leccion', 'lecciones', 'setter', 'closer'], r: `La **Academia** tiene ${CURSOS.length} cursos de 12 lecciones. Las primeras ${GRATIS_POR_CURSO} de cada curso son gratis; con la licencia de la Academia ($${CONFIG.PRECIO_ACADEMIA.toFixed(2)}, pago único) se abren todas. Los módulos Neuro no incluyen la Academia.` },
-  { k: ['precio', 'cuesta', 'costo', 'pagar', 'comprar'], r: `Cada módulo cuesta **$${CONFIG.PRECIO_MODULO.toFixed(2)} en pago único** y la Academia **$${CONFIG.PRECIO_ACADEMIA.toFixed(2)}**. El pago es por **PayPal o Yappy** y envías el comprobante por **WhatsApp** (mira **Cómo pagar**).` },
-  { k: ['gratis', 'prueba', 'limite', 'siete', 'full', 'diferencia'], r: 'Cada módulo gratis incluye **7 usos** (clientes, citas, pedidos…). Con licencia es ilimitado, puedes usar solo tu marca y desbloqueas el Optimizador completo (SixSaaS Full).' },
+  { k: ['precio', 'cuesta', 'costo', 'pagar', 'comprar'], r: `SixSaaS Full cuesta **$${CONFIG.PRECIO_MODULO.toFixed(2)} en pago único** y la Academia **$${CONFIG.PRECIO_ACADEMIA.toFixed(2)}**. El pago es por **PayPal o Yappy** y envías el comprobante por **WhatsApp** (mira **Cómo pagar**).` },
+  { k: ['gratis', 'prueba', 'limite', 'siete', 'full', 'diferencia'], r: 'Cada app Neuro gratis incluye **7 usos** (clientes, citas, pedidos…) y con su licencia es ilimitada. Las apps Neuro y SixSaaS Full se compran por separado: ninguna desbloquea a la otra.' },
   { k: ['modulo', 'modulos', 'enlazar', 'abrir', 'enlace'], r: 'Los módulos aparecen con **Abrir** cuando están publicados. Si no lo detecta, pega su dirección en **Ajustes → Mis módulos**.' },
   { k: ['datos', 'perder', 'privacidad', 'incognito'], r: 'Tus datos viven solo en tu dispositivo. Puedes usar modo incógnito o guardar en este teléfono (Ajustes).' },
   { k: ['actualizacion', 'actualizar', 'mejora', 'funcion', 'nuevo'], r: 'Las actualizaciones y módulos nuevos se pagan por **PayPal o Yappy** (mira **Cómo pagar** en Licencias) y envías el comprobante por **WhatsApp** al 6438-7978.' },
@@ -489,7 +489,7 @@ const COMPARACION = [
   ] },
   { g: 'Precio', f: [
     ['Costo', '$0', `Desde $${CONFIG.PRECIO_MODULO.toFixed(2)}`],
-    ['Cómo se desbloquea', 'No necesita licencia', 'Cualquier módulo Neuro lo activa (la Academia es aparte)'],
+    ['Cómo se desbloquea', 'No necesita licencia', 'Licencia de SixSaaS Full (las apps Neuro y la Academia son aparte)'],
     ['Cobro', 'Nada que pagar', 'Pago único, sin suscripción'],
   ] },
 ];
@@ -511,8 +511,7 @@ const BENEFICIOS = [
   ['📊', 'Optimizador completo', 'Todas las acciones con guía paso a paso.'],
   ['🧰', '6 herramientas', 'Publicaciones, pedir reseñas, plan de 30 días y más.'],
   ['🤖', 'Prompts para Gemini', 'Personalizados con el puntaje de tu perfil.'],
-  ['🧩', 'Marca y catálogo compartidos', 'Tu logo, tus datos y tu catálogo viajan entre módulos.'],
-  ['🔓', 'Sin suscripción', 'Pagas una vez por módulo.'],
+  ['🔓', 'Sin suscripción', 'Pagas una vez y es tuyo.'],
   ['📴', 'Funciona sin conexión', 'Instálala y úsala donde estés.'],
 ];
 
@@ -530,17 +529,17 @@ function vistaComparar() {
   <section class="cmp">
     <p class="help"><a href="#/">← Inicio</a></p>
     <h1 style="font-size:1.6rem" class="mt">SixSaaS Gratis vs Full</h1>
-    <p class="mt">Empieza gratis. Con <b>cualquier módulo Neuro</b> ($${CONFIG.PRECIO_MODULO.toFixed(2)}, pago único) desbloqueas el Optimizador completo (SixSaaS Full). La <b>Academia</b> se desbloquea aparte, por $${CONFIG.PRECIO_ACADEMIA.toFixed(2)}.</p>
+    <p class="mt">Empieza gratis. Con la licencia de <b>SixSaaS Full</b> ($${CONFIG.PRECIO_MODULO.toFixed(2)}, pago único) desbloqueas el Optimizador completo. Las apps Neuro se venden aparte y no lo incluyen. La <b>Academia</b> se desbloquea aparte, por $${CONFIG.PRECIO_ACADEMIA.toFixed(2)}.</p>
     ${full ? '<p class="note mt">Ya tienes SixSaaS Full activo en este dispositivo.</p>' : ''}
     ${tablaCmp(COMPARACION, 'Gratis', 'Full')}
     <h2 class="mt2">Academia: Gratis vs completa</h2>
     ${tablaCmp(COMP_ACADEMIA, 'Gratis', 'Academia')}
   </section>
-  <section><h2>Lo que recibes al adquirir un módulo</h2>
+  <section><h2>Lo que recibes con SixSaaS Full</h2>
     <div class="grid mt">${BENEFICIOS.map(([i, t, d]) => `<article class="card"><h3>${i} ${esc(t)}</h3><p class="mt">${esc(d)}</p></article>`).join('')}</div></section>
-  <section class="card glow"><h3>Elige tu módulo</h3>
+  <section class="card glow"><h3>Activa SixSaaS Full</h3>
     <div class="mods mt">${MODULES.map((m) => `<img src="${m.logo}" alt="${esc(m.nombre)}" width="56" height="56" loading="lazy">`).join('')}</div>
-    <p class="mt">Cada uno cuesta $${CONFIG.PRECIO_MODULO.toFixed(2)} y desbloquea todo lo de la columna Full. Pagas por PayPal o Yappy y envías el comprobante por WhatsApp.</p>
+    <p class="mt">SixSaaS Full cuesta $${CONFIG.PRECIO_MODULO.toFixed(2)}, pago único, y desbloquea todo lo de la columna Full. Pagas por PayPal o Yappy y envías el comprobante por WhatsApp. Las apps Neuro de arriba se venden por separado y no incluyen SixSaaS Full.</p>
     <div class="row mt"><a class="btn" href="#/pagar/sixsaas">Cómo pagar</a><a class="btn ghost" href="#/licencias">Ya tengo mi código</a><button class="btn ghost" data-act="imprimir">Imprimir / guardar PDF</button></div>
     <p class="help mt">SixSaaS no está afiliado a Google. Gemini y Google Business Profile son marcas de Google LLC.</p></section>`;
 }

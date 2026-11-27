@@ -2,7 +2,7 @@ import subprocess, time, sys, json
 from playwright.sync_api import sync_playwright
 srv = subprocess.Popen(['python3','-m','http.server','8123','-d','/home/claude/sixsaas/sixsaas-pwa'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
 time.sleep(1)
-lic = subprocess.check_output(['node','/home/claude/sixsaas/EMP-licencias/generar-licencia.mjs','recompras','qa@test.com']).decode().strip()
+lic = subprocess.check_output(['node','/home/claude/sixsaas/EMP-licencias/generar-licencia.mjs','sixsaas','qa@test.com']).decode().strip()
 errs=[]
 try:
   with sync_playwright() as p:
@@ -55,7 +55,7 @@ try:
     # licencia inválida
     pg.click('.tabs a[data-tab=licencias]'); pg.fill('[data-lic]','SXS1.abc.def'); pg.click('#lic button'); pg.wait_for_selector('.toast.err')
     # licencia válida (con saltos de línea)
-    pg.fill('[data-lic]', lic[:50]+'\n'+lic[50:]); pg.click('#lic button'); pg.wait_for_selector('text=Neuro Recompras >> nth=0')
+    pg.fill('[data-lic]', lic[:50]+'\n'+lic[50:]); pg.click('#lic button'); pg.wait_for_selector('text=SixSaaS Full >> nth=0')
     time.sleep(.4)
     assert pg.locator('#badge').inner_text()=='FULL'
     pg.screenshot(path='/tmp/s3_licencias.png', full_page=True)
