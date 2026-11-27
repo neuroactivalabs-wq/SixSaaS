@@ -53,9 +53,9 @@ try:
     pg.evaluate("localStorage.setItem('sxs:progreso', JSON.stringify({'2':{hecho:true}}))"); pg.reload(); pg.wait_for_selector('.lec')
     pg.goto(U+'#/academia/3'); pg.wait_for_selector('h1'); assert 'Categorías' in pg.inner_text('h1')
     pg.goto(U+'#/academia/google'); pg.wait_for_selector('.lec'); assert pg.locator('.lec .num.done').count()==1, 'migración'
-    # --- licencia de módulo: Full sí, Academia no
+    # --- licencia de módulo: ni Full ni Academia (SixSaaS se vende aparte)
     pg.goto(U+f'#/licencias?key={lic_mod}'); pg.reload(); pg.wait_for_selector('.act')
-    assert 'FULL' in pg.inner_text('#badge'), pg.inner_text('#badge')
+    assert 'FULL' not in pg.inner_text('#badge'), pg.inner_text('#badge')
     pg.goto(U+'#/academia/closer/6'); pg.wait_for_selector('.lock'); assert 'Esta lección es parte de la Academia' in pg.inner_text('.lock')
     # --- solo licencia Academia (limpio)
     ctx.close(); ctx,pg=new(b)

@@ -1,6 +1,6 @@
 // Configuración central de SixSaaS — Neuroactiva Labs + Neuro Gestión Empresarial
 export const CONFIG = {
-  VERSION: '0.5.2',
+  VERSION: '0.5.3',
 
   // Clave PÚBLICA para verificar licencias (la privada vive solo en el kit de EMP).
   PUBLIC_KEY_JWK: {
@@ -12,8 +12,9 @@ export const CONFIG = {
     crv: 'P-256',
   },
 
-  // Cualquier licencia de un módulo Neuro desbloquea el Optimizador Full. La licencia 'academia' solo abre los cursos.
-  ANY_KEY_UNLOCKS_FULL: true,
+  // SixSaaS se vende aparte: solo la licencia 'sixsaas' abre el Optimizador Full. Las licencias de módulos Neuro
+  // no lo desbloquean, y la licencia 'academia' solo abre los cursos.
+  ANY_KEY_UNLOCKS_FULL: false,
 
   // Cómo se paga una licencia: PayPal o Yappy, y el comprobante se envía por WhatsApp.
   // SixSaaS no procesa pagos: estos datos solo se muestran en la pantalla "Cómo pagar" (#/pagar).
@@ -31,7 +32,8 @@ export const CONFIG = {
   // WhatsApp de Neuro Gestión Empresarial (solo dígitos con código de país). Aquí llegan los comprobantes de pago.
   CONTACTO_WA: '50764387978',
 
-  PRECIO_MODULO: 4.99,
+  PRECIO_MODULO: 9.99,   // precio desde el que se vende cada app Neuro (plan base; planes de US$9.99 a US$19.99)
+  PRECIO_SIXSAAS: 4.99,  // licencia de SixSaaS Full, se vende aparte
   PRECIO_ACADEMIA: 4.99, // los 4 cursos completos, pago único
 
   // Versión gratis ≈ 1/3 del paquete Full
