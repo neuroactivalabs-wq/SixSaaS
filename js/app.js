@@ -331,7 +331,7 @@ function vistaAjustes() {
   <section class="card"><h3>Mis módulos</h3><p class="mt">SixSaaS los enlaza solo cuando los abres o cuando están publicados con el nombre estándar. Si usas otra dirección, pégala aquí.</p>
     <form id="urls" class="mt">${MODULES.map((m) => `<label class="f mt">${esc(m.nombre)}<input type="url" name="${m.id}" value="${esc(urlDe(m.id))}" placeholder="${esc(CONFIG.AUTO_URL(m.id))}" autocomplete="off" inputmode="url"></label>`).join('')}
     <div class="row mt"><button class="btn small" type="submit">Guardar enlaces</button><button type="button" class="btn small ghost" data-act="buscar-mod">Buscar módulos</button></div></form></section>
-  <section class="card"><h3>Ayuda y actualizaciones</h3><div class="row mt"><a class="btn small" href="#/ayuda">Ayuda</a><a class="btn small ghost" href="${esc(contactoLink('Pedir una actualización o un módulo nuevo'))}" target="_blank" rel="noopener">Pedir actualizaciones por WhatsApp</a></div></section>
+  <section class="card"><h3>Ayuda y actualizaciones</h3><div class="row mt"><a class="btn small" href="#/ayuda">Ayuda</a><a class="btn small ghost" href="#/pagar/sixsaas">Actualizaciones y módulos: cómo pagar</a></div></section>
   <section class="card"><h3>Instalar SixSaaS</h3><p class="mt">Úsala como app en tu celular, incluso sin internet.</p>
     <div class="row mt"><button class="btn small" data-act="instalar" ${state.installEvt ? '' : 'disabled'}>Instalar app</button></div>
     ${state.installEvt ? '' : '<p class="help mt">Si no ves el botón: en iPhone usa Compartir → "Agregar a inicio"; en Android/PC usa el menú del navegador → "Instalar".</p>'}</section>
@@ -347,7 +347,7 @@ const AYUDA_KB = [
   { k: ['gratis', 'prueba', 'limite', 'siete', 'full', 'diferencia'], r: 'Cada módulo gratis incluye **7 usos** (clientes, citas, pedidos…). Con licencia es ilimitado, puedes usar solo tu marca y desbloqueas el Optimizador completo (SixSaaS Full).' },
   { k: ['modulo', 'modulos', 'enlazar', 'abrir', 'enlace'], r: 'Los módulos aparecen con **Abrir** cuando están publicados. Si no lo detecta, pega su dirección en **Ajustes → Mis módulos**.' },
   { k: ['datos', 'perder', 'privacidad', 'incognito'], r: 'Tus datos viven solo en tu dispositivo. Puedes usar modo incógnito o guardar en este teléfono (Ajustes).' },
-  { k: ['actualizacion', 'actualizar', 'mejora', 'funcion', 'nuevo'], r: 'Las actualizaciones y módulos nuevos se piden por **WhatsApp** a Neuro Gestión Empresarial.' },
+  { k: ['actualizacion', 'actualizar', 'mejora', 'funcion', 'nuevo'], r: 'Las actualizaciones y módulos nuevos se pagan por **PayPal o Yappy** (mira **Cómo pagar** en Licencias) y envías el comprobante por **WhatsApp** al 6438-7978.' },
   { k: ['optimizador', 'google', 'perfil', 'gemini'], r: 'El **Optimizador** analiza tu perfil de Google y te da acciones por impacto. La **Academia** te enseña a ejecutarlas y a conversar, cerrar y fidelizar clientes.' },
 ];
 const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -359,7 +359,7 @@ function vistaAyuda() {
     <div class="tabsbar mt">${['¿Cómo activo mi licencia?', '¿Qué incluye la versión gratis?', '¿Cuánto cuesta?', '¿Cómo enlazo mis módulos?'].map((s) => `<button type="button" class="pill" data-act="asis-sug" data-q="${esc(s)}">${esc(s)}</button>`).join('')}</div>
     <form id="asis" class="mt"><div class="row"><input type="text" name="q" placeholder="Escribe tu pregunta…" autocomplete="off" style="flex:1;min-width:0"><button class="btn" type="submit">Preguntar</button></div></form></section>
   <section class="card"><h3>Habla con Neuro Gestión Empresarial</h3><p class="mt">¿Prefieres una persona? Escríbenos por WhatsApp.</p><div class="stack mt">${temas.map(([t, n]) => `<a class="btn ghost" href="${esc(contactoLink(n))}" target="_blank" rel="noopener">${esc(t)}</a>`).join('')}</div></section>
-  <section class="card"><h3>Pedir actualizaciones</h3><p class="mt">Mejoras y módulos nuevos se piden por WhatsApp.</p><div class="row mt"><a class="btn" href="${esc(contactoLink('Pedir una actualización o un módulo nuevo'))}" target="_blank" rel="noopener">Escribir por WhatsApp</a></div></section>`;
+  <section class="card"><h3>Pedir actualizaciones</h3><p class="mt">Las actualizaciones y los módulos nuevos se pagan por PayPal o Yappy, y envías el comprobante por WhatsApp.</p><div class="row mt"><a class="btn" href="#/pagar/sixsaas">Cómo pagar</a></div></section>`;
 }
 function preguntar(q) {
   const t = new Set(norm(q).replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean)); const nq = norm(q);
@@ -566,8 +566,9 @@ function vistaPagar(id) {
     <p class="mt">${esc(p.nombre)} · <b>$${monto}</b> pago único, sin suscripción.</p></section>
   <section class="card glow"><h3>1. Paga por PayPal o Yappy</h3>
     <div class="stack mt"><a class="btn" href="${esc(paypal)}" target="_blank" rel="noopener">Pagar $${monto} con PayPal</a></div>
-    <p class="mt"><b>Yappy:</b> ${esc(P.YAPPY)} · ${esc(P.YAPPY_NOMBRE)}</p>
-    <div class="row mt"><button class="btn small ghost" data-act="copiar-yappy">Copiar número de Yappy</button></div></section>
+    <p class="mt"><b>Yappy</b> a nombre de ${esc(P.YAPPY_NOMBRE)}</p>
+    <div class="row mt">${P.YAPPY_URL ? `<a class="btn small ghost" href="${esc(P.YAPPY_URL)}" target="_blank" rel="noopener">Pagar $${monto} con Yappy</a>` : `<button class="btn small ghost" data-act="copiar-yappy">Pagar $${monto} con Yappy</button>`}</div>
+    <p class="help mt">${P.YAPPY_URL ? 'Se abre Yappy para pagar.' : 'Al tocarlo se copia el Yappy de ' + esc(P.YAPPY_NOMBRE) + ': abre tu app Yappy, toca Enviar y pégalo.'}</p></section>
   <section class="card"><h3>2. Envía tu comprobante por WhatsApp</h3>
     <p class="mt">Manda la captura del pago. Te respondemos con tu código de licencia.</p>
     <div class="stack mt"><a class="btn" href="${esc(wa)}" target="_blank" rel="noopener">Enviar comprobante por WhatsApp</a></div></section>
@@ -668,7 +669,7 @@ app.addEventListener('click', async (e) => {
   if (a === 'asis-sug') { preguntar(el.dataset.q); return; }
   if (a === 'buscar-mod') { toast('Buscando…'); await detectar(); toast('Listo'); return; }
   if (a === 'imprimir') { window.print(); return; }
-  if (a === 'copiar-yappy') { copiar(CONFIG.PAGO.YAPPY.replace(/\D/g, '')); return; }
+  if (a === 'copiar-yappy') { try { await navigator.clipboard.writeText(CONFIG.PAGO.YAPPY.replace(/\D/g, '')); toast(`Yappy de ${CONFIG.PAGO.YAPPY_NOMBRE} copiado: pégalo en tu app Yappy`); } catch { toast('No se pudo copiar. Escríbenos por WhatsApp.', true); } return; }
   if (a === 'editar') { state.resultado = null; render(); }
   if (a === 'limpiar') { state.perfil = {}; persistir(); render(); toast('Respuestas borradas'); }
   if (a === 'modo-guardar') { store.setMode('guardar'); persistir(); toast('Se guardará en este dispositivo'); render(); }

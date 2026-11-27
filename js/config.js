@@ -19,8 +19,9 @@ export const CONFIG = {
   // SixSaaS no procesa pagos: estos datos solo se muestran en la pantalla "Cómo pagar" (#/pagar).
   PAGO: {
     PAYPAL_URL: 'https://paypal.me/jesusbarrios06', // se le agrega el monto, p. ej. /4.99USD
-    YAPPY: '6768-4866',
+    YAPPY: '67684866',          // no se muestra en pantalla: el botón lo copia para pegarlo en Yappy
     YAPPY_NOMBRE: 'Jesus Barrios',
+    YAPPY_URL: '',              // si tienes enlace de cobro de Yappy, ponlo aquí y el botón lo abre
   },
 
   // Dirección donde se busca cada módulo automáticamente (nombre de proyecto en Cloudflare Pages).
