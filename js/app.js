@@ -130,10 +130,10 @@ function modCard(m, compact = false) {
     : `<a class="btn small" href="${esc(buy)}">Obtener</a>${activo ? '<a class="btn small ghost" href="#/ajustes">Enlazar</a>' : ''}`;
   if (compact) {
     const lg = m.logo ? `<img class="logo" src="${m.logo}" alt="Logo ${esc(m.nombre)}" width="48" height="48" loading="lazy">` : `<div class="ph" aria-hidden="true">${esc(m.sigla)}</div>`;
-    return `<article class="card mod compact" title="${esc(m.desc)}"><div class="head">${lg}<div><h3>${esc(m.nombre)}</h3><span class="price">$${CONFIG.PRECIO_MODULO.toFixed(2)}</span></div></div><div class="meta">${accion}${activo ? '<span class="tag ok">Activo ✓</span>' : ''}</div></article>`;
+    return `<article class="card mod compact" title="${esc(m.desc)}"><div class="head">${lg}<div><h3>${esc(m.nombre)}</h3><span class="price">desde $${CONFIG.PRECIO_MODULO.toFixed(2)}</span></div></div><div class="meta">${accion}${activo ? '<span class="tag ok">Activo ✓</span>' : ''}</div></article>`;
   }
   return `<article class="card mod">
-    <div class="head">${logo}<div><h3>${esc(m.nombre)}</h3><span class="price">$${CONFIG.PRECIO_MODULO.toFixed(2)} <small style="color:var(--mut);font-weight:600">pago único</small></span></div></div>
+    <div class="head">${logo}<div><h3>${esc(m.nombre)}</h3><span class="price">desde $${CONFIG.PRECIO_MODULO.toFixed(2)} <small style="color:var(--mut);font-weight:600">pago único</small></span></div></div>
     <p>${esc(m.desc)}</p>
     <div class="meta">${accion}${activo ? '<span class="tag ok">Activo ✓</span>' : '<span class="tag">7 usos gratis</span>'}</div>
   </article>`;
@@ -159,7 +159,7 @@ function vistaInicio() {
   <section class="card"><div class="row sp"><div><h3>📊 Optimizador de tu perfil de Google</h3><p class="mt">Tu puntaje de 0 a 100 y las acciones que más suman. Gratis, en 3 minutos.</p></div><a class="btn small" href="#/optimizador">Analizar mi perfil</a></div></section>
   <section class="mods-sec">
     <h2 class="sub">Herramientas Neuro para ponerlo en práctica</h2>
-    <p class="help" style="margin:4px 0 12px">Módulos independientes de $${CONFIG.PRECIO_MODULO.toFixed(2)} (pago único), con 7 usos gratis cada uno.</p>
+    <p class="help" style="margin:4px 0 12px">Apps independientes desde $${CONFIG.PRECIO_MODULO.toFixed(2)} (pago único), con 7 usos gratis cada una. Se venden aparte de SixSaaS.</p>
     <div class="grid compact">${MODULES.map((m) => modCard(m, true)).join('')}</div>
     <div class="row mt"><a class="btn ghost small" href="#/comparar">Comparar Gratis vs Full</a><a class="btn ghost small" href="#/licencias">Tengo una licencia</a></div>
   </section>
@@ -248,7 +248,7 @@ function herramientaHTML(r, full) {
   const t = state.tool;
   const permitido = full || CONFIG.FREE_TOOLS.includes(t);
   if (!permitido) {
-    return `<div class="lock mt"><h3>Disponible en SixSaaS Full</h3><p class="mt">Con la licencia de SixSaaS Full ($${CONFIG.PRECIO_MODULO.toFixed(2)}, pago único) desbloqueas todas las herramientas y los pasos detallados.</p><div class="row mt"><a class="btn" href="#/pagar/sixsaas">Cómo pagar</a><a class="btn ghost" href="#/licencias">Activar licencia</a></div></div>`;
+    return `<div class="lock mt"><h3>Disponible en SixSaaS Full</h3><p class="mt">Con la licencia de SixSaaS Full ($${CONFIG.PRECIO_SIXSAAS.toFixed(2)}, pago único) desbloqueas todas las herramientas y los pasos detallados.</p><div class="row mt"><a class="btn" href="#/pagar/sixsaas">Cómo pagar</a><a class="btn ghost" href="#/licencias">Activar licencia</a></div></div>`;
   }
   const g = state.gen;
   const inputs = `<div class="fields mt">
@@ -343,7 +343,7 @@ function vistaAjustes() {
 const AYUDA_KB = [
   { k: ['licencia', 'activar', 'codigo', 'clave'], r: 'Paga SixSaaS Full o la Academia por PayPal o Yappy, envía el comprobante por WhatsApp, copia el código que te enviamos (empieza con SXS1.) y pégalo en **Licencias**. SixSaaS Full se vende aparte: las apps Neuro no lo desbloquean. Los cursos de la Academia se abren con la licencia de la **Academia**.' },
   { k: ['academia', 'curso', 'cursos', 'leccion', 'lecciones', 'setter', 'closer'], r: `La **Academia** tiene ${CURSOS.length} cursos de 12 lecciones. Las primeras ${GRATIS_POR_CURSO} de cada curso son gratis; con la licencia de la Academia ($${CONFIG.PRECIO_ACADEMIA.toFixed(2)}, pago único) se abren todas. Los módulos Neuro no incluyen la Academia.` },
-  { k: ['precio', 'cuesta', 'costo', 'pagar', 'comprar'], r: `SixSaaS Full cuesta **$${CONFIG.PRECIO_MODULO.toFixed(2)} en pago único** y la Academia **$${CONFIG.PRECIO_ACADEMIA.toFixed(2)}**. El pago es por **PayPal o Yappy** y envías el comprobante por **WhatsApp** (mira **Cómo pagar**).` },
+  { k: ['precio', 'cuesta', 'costo', 'pagar', 'comprar'], r: `SixSaaS Full cuesta **$${CONFIG.PRECIO_SIXSAAS.toFixed(2)} en pago único**, cada app Neuro **desde $${CONFIG.PRECIO_MODULO.toFixed(2)}** y la Academia **$${CONFIG.PRECIO_ACADEMIA.toFixed(2)}**. El pago es por **PayPal o Yappy** y envías el comprobante por **WhatsApp** (mira **Cómo pagar**).` },
   { k: ['gratis', 'prueba', 'limite', 'siete', 'full', 'diferencia'], r: 'Cada app Neuro gratis incluye **7 usos** (clientes, citas, pedidos…) y con su licencia es ilimitada. Las apps Neuro y SixSaaS Full se compran por separado: ninguna desbloquea a la otra.' },
   { k: ['modulo', 'modulos', 'enlazar', 'abrir', 'enlace'], r: 'Los módulos aparecen con **Abrir** cuando están publicados. Si no lo detecta, pega su dirección en **Ajustes → Mis módulos**.' },
   { k: ['datos', 'perder', 'privacidad', 'incognito'], r: 'Tus datos viven solo en tu dispositivo. Puedes usar modo incógnito o guardar en este teléfono (Ajustes).' },
@@ -488,7 +488,7 @@ const COMPARACION = [
     ['Sin servidor: tus datos no salen de tu dispositivo', SI, SI],
   ] },
   { g: 'Precio', f: [
-    ['Costo', '$0', `Desde $${CONFIG.PRECIO_MODULO.toFixed(2)}`],
+    ['Costo', '$0', `$${CONFIG.PRECIO_SIXSAAS.toFixed(2)} pago único`],
     ['Cómo se desbloquea', 'No necesita licencia', 'Licencia de SixSaaS Full (las apps Neuro y la Academia son aparte)'],
     ['Cobro', 'Nada que pagar', 'Pago único, sin suscripción'],
   ] },
@@ -529,7 +529,7 @@ function vistaComparar() {
   <section class="cmp">
     <p class="help"><a href="#/">← Inicio</a></p>
     <h1 style="font-size:1.6rem" class="mt">SixSaaS Gratis vs Full</h1>
-    <p class="mt">Empieza gratis. Con la licencia de <b>SixSaaS Full</b> ($${CONFIG.PRECIO_MODULO.toFixed(2)}, pago único) desbloqueas el Optimizador completo. Las apps Neuro se venden aparte y no lo incluyen. La <b>Academia</b> se desbloquea aparte, por $${CONFIG.PRECIO_ACADEMIA.toFixed(2)}.</p>
+    <p class="mt">Empieza gratis. Con la licencia de <b>SixSaaS Full</b> ($${CONFIG.PRECIO_SIXSAAS.toFixed(2)}, pago único) desbloqueas el Optimizador completo. Las apps Neuro se venden aparte y no lo incluyen. La <b>Academia</b> se desbloquea aparte, por $${CONFIG.PRECIO_ACADEMIA.toFixed(2)}.</p>
     ${full ? '<p class="note mt">Ya tienes SixSaaS Full activo en este dispositivo.</p>' : ''}
     ${tablaCmp(COMPARACION, 'Gratis', 'Full')}
     <h2 class="mt2">Academia: Gratis vs completa</h2>
@@ -539,7 +539,7 @@ function vistaComparar() {
     <div class="grid mt">${BENEFICIOS.map(([i, t, d]) => `<article class="card"><h3>${i} ${esc(t)}</h3><p class="mt">${esc(d)}</p></article>`).join('')}</div></section>
   <section class="card glow"><h3>Activa SixSaaS Full</h3>
     <div class="mods mt">${MODULES.map((m) => `<img src="${m.logo}" alt="${esc(m.nombre)}" width="56" height="56" loading="lazy">`).join('')}</div>
-    <p class="mt">SixSaaS Full cuesta $${CONFIG.PRECIO_MODULO.toFixed(2)}, pago único, y desbloquea todo lo de la columna Full. Pagas por PayPal o Yappy y envías el comprobante por WhatsApp. Las apps Neuro de arriba se venden por separado y no incluyen SixSaaS Full.</p>
+    <p class="mt">SixSaaS Full cuesta $${CONFIG.PRECIO_SIXSAAS.toFixed(2)}, pago único, y desbloquea todo lo de la columna Full. Pagas por PayPal o Yappy y envías el comprobante por WhatsApp. Las apps Neuro de arriba se venden por separado y no incluyen SixSaaS Full.</p>
     <div class="row mt"><a class="btn" href="#/pagar/sixsaas">Cómo pagar</a><a class="btn ghost" href="#/licencias">Ya tengo mi código</a><button class="btn ghost" data-act="imprimir">Imprimir / guardar PDF</button></div>
     <p class="help mt">SixSaaS no está afiliado a Google. Gemini y Google Business Profile son marcas de Google LLC.</p></section>`;
 }
@@ -549,8 +549,8 @@ function vistaComparar() {
 function productoPago(id) {
   if (id === 'academia') return { nombre: 'Academia SixSaaS (4 cursos)', precio: CONFIG.PRECIO_ACADEMIA };
   const m = MODULES.find((x) => x.id === id);
-  if (m) return { nombre: m.nombre, precio: CONFIG.PRECIO_MODULO };
-  return { nombre: 'SixSaaS Full (Optimizador completo)', precio: CONFIG.PRECIO_MODULO };
+  if (m) return { nombre: `${m.nombre} (plan base)`, precio: CONFIG.PRECIO_MODULO };
+  return { nombre: 'SixSaaS Full (Optimizador completo)', precio: CONFIG.PRECIO_SIXSAAS };
 }
 function vistaPagar(id) {
   const p = productoPago(id);

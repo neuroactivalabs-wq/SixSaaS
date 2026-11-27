@@ -32,7 +32,8 @@ export const CONFIG = {
   // WhatsApp de Neuro Gestión Empresarial (solo dígitos con código de país). Aquí llegan los comprobantes de pago.
   CONTACTO_WA: '50764387978',
 
-  PRECIO_MODULO: 4.99,
+  PRECIO_MODULO: 9.99,   // precio desde el que se vende cada app Neuro (plan base; planes de US$9.99 a US$19.99)
+  PRECIO_SIXSAAS: 4.99,  // licencia de SixSaaS Full, se vende aparte
   PRECIO_ACADEMIA: 4.99, // los 4 cursos completos, pago único
 
   // Versión gratis ≈ 1/3 del paquete Full
