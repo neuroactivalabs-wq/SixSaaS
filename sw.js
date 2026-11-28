@@ -1,8 +1,8 @@
 // Service worker de SixSaaS: funciona sin conexión. Sube VERSION al publicar cambios.
-const VERSION = 'sixsaas-v0.5.3';
+const VERSION = 'sixsaas-v0.5.4';
 const ASSETS = [
   './', 'index.html', 'manifest.webmanifest', 'css/styles.css',
-  'js/app.js', 'js/config.js', 'js/modules.js', 'js/license.js', 'js/store.js', 'js/optimizer.js', 'js/academia.js', 'js/cursos/google-extra.js', 'js/cursos/setter.js', 'js/cursos/closer.js', 'js/cursos/fidelizar.js',
+  'js/app.js', 'js/sinjs.js', 'js/config.js', 'js/modules.js', 'js/license.js', 'js/store.js', 'js/optimizer.js', 'js/academia.js', 'js/cursos/google-extra.js', 'js/cursos/setter.js', 'js/cursos/closer.js', 'js/cursos/fidelizar.js',
   'img/sixsaas.webp', 'img/academia.webp', 'img/academia-sm.webp', 'img/resenas.webp', 'img/cotizaciones.webp', 'img/recompras.webp', 'img/citador.webp', 'img/pedidos.webp', 'img/crm.webp',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/favicon.png', 'icons/apple-touch-icon.png',
 ];
