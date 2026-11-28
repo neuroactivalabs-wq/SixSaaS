@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Neuro Pedidos</title>
+<meta name="description" content="Pedidos por WhatsApp ordenados: tienda-enlace, cobros, abonos y entregas.">
+<meta property="og:title" content="Neuro Pedidos">
+<meta property="og:description" content="Pedidos por WhatsApp ordenados: tienda-enlace, cobros, abonos y entregas.">
+<meta property="og:url" content="https://neuropedidos.pages.dev/">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://neuropedidos.pages.dev/">
+<script>document.documentElement.classList.add('js')</script>
+<style>.js #resumen-app{display:none!important}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -104,6 +112,9 @@ th{font-size:13px;color:var(--mute);font-weight:600}.num{text-align:right;font-v
 <script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
 <script>/* Enlaces de descarga de la versión gratis de cada app. Proyectos de Cloudflare Pages de Neuroactiva Labs. */window.NX_DESCARGA={"resenas": "https://neuroresenas.pages.dev/", "pedidos": "https://neuropedidos.pages.dev/", "cotizaciones": "https://neurocotizaciones.pages.dev/", "citador": "https://neurocitador.pages.dev/", "recompras": "https://neurorecompras.pages.dev/", "crm": "https://neurocrm.pages.dev/", "sixsaas": "https://sixsaas-neuroactiva.pages.dev/"};</script><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="img/logo.webp"><link rel="apple-touch-icon" href="icons/icon-192.png"><meta name="theme-color" content="#05070a"></head>
 <body>
+<!-- resumen-app: contenido visible sin JavaScript (revisores, buscadores, vistas previas). La app lo oculta al cargar. -->
+<section id="resumen-app" aria-label="Qué hace Neuro Pedidos" style="max-width:760px;margin:0 auto;padding:24px 18px;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><h1>Neuro Pedidos</h1><p>Pedidos por WhatsApp ordenados: tienda-enlace, cobros, abonos y entregas.</p><h2>Qué puedes hacer</h2><ul><li><b>Hoy</b>: dinero por cobrar, ventas, ganancia y margen del mes, ticket promedio, pedidos atrasados, meta del mes, productos estrella, stock bajo y clientes dormidos.</li><li><b>Pedidos</b>: tablero por estado: nuevo, confirmado, en preparación, listo, en camino.</li><li><b>Agenda y ruta</b>: entregas del día ordenadas.</li><li><b>Cobros</b>: saldos pendientes y abonos, con recordatorio por WhatsApp y cobro con Yappy o tu link de pago.</li><li><b>Tienda-enlace</b>: catálogo con QR para que el cliente arme su pedido y lo envíe por WhatsApp.</li><li><b>Nuevo pedido</b>: pegas el mensaje del cliente y la app crea el pedido con cliente, saldo y entrega; o lo llenas a mano.</li><li><b>Inventario, Vender más y Cierre</b>: stock, ideas y flyers para vender, y cierre del día.</li><li><b>Mi negocio y Plan</b>: logo, link de pago y licencia.</li></ul><h2>Cómo funciona</h2><ol><li>Compartes tu <b>tienda-enlace</b> o su QR en tu WhatsApp, estados e Instagram.</li><li>Tu cliente (por ejemplo, alguien que le compra a Panadería Aurora) elige productos y toca <b>Enviar por WhatsApp</b>. Te llega un mensaje ordenado: productos, total, entrega, nombre y teléfono.</li><li>En tu WhatsApp mantienes presionado ese mensaje, tocas <b>Copiar</b> y lo pegas en <b>Nuevo pedido</b>. La app lo lee y crea el pedido con el cliente, el saldo y la entrega.</li><li>Si el cliente te escribe a su manera ("me guardas 2 panes de queso"), creas el pedido en el formulario en segundos.</li><li>Desde el tablero le avisas cada paso (recibido, listo, en camino) y cobras con tu Yappy o tu link de pago, con un toque.</li></ol><h2>Planes</h2><ul><li>Versión gratis: todas las funciones por 7 días de uso, sin tarjeta.</li><li>Pro: $9.99 (pago único)</li><li>Pro+: $19.99 (pago único)</li></ul><h2>Privacidad</h2><p>Tus datos se guardan solo en este dispositivo (no hay cuenta ni servidor). Puedes hacer respaldo en archivo.</p><p>App web instalable (PWA) de Neuroactiva Labs. Para usarla, ábrela en un navegador con JavaScript activado: <a href="https://neuropedidos.pages.dev/">https://neuropedidos.pages.dev/</a></p><p>Ayuda y compras: <a href="https://wa.me/50764387978">WhatsApp Business +507 6438-7978</a></p></section>
+
 <header>
   <div class="top"><img class="hlogo" id="hlogo" alt=""><div><h1 id="hname">Neuro Pedidos</h1><small id="hsub">Delicias de Ana</small></div><a class="plan" href="#plan">Pro+ activo</a></div>
   <nav id="nav">

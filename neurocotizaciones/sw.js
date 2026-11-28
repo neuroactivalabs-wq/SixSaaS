@@ -1,5 +1,5 @@
 // Neuro: funciona sin conexión. Red primero; si no hay red, la última copia guardada.
-const C='neuro-cotizaciones-v2.1';
+const C='neuro-cotizaciones-v2.2';
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(['./','index.html','manifest.webmanifest','img/logo.webp','icons/icon-192.png'])).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{if(e.request.method!=='GET'||new URL(e.request.url).origin!==location.origin)return;
